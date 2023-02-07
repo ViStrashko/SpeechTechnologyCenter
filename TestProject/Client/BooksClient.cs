@@ -1,9 +1,6 @@
-﻿using System.Net.Http.Headers;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using TestProject.Support;
-using System.Text.Json;
-using TestProject.Models.Request;
 
 namespace TestProject.Client
 {

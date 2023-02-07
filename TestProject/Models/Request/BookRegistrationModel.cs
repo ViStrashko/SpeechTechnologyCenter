@@ -11,9 +11,9 @@ namespace TestProject.Models.Request
         public string Author { get; set; }
 
         [JsonPropertyName("year")]
-        public int Year { get; set; }
+        public int? Year { get; set; }
 
         [JsonPropertyName("isElectronicBook")]
-        public bool IsElectronicBook { get; set; }
+        public bool? IsElectronicBook { get; set; }
     }
 }
