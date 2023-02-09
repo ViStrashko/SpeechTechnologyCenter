@@ -9,7 +9,7 @@ namespace TestProject.Tests.TestSources
             yield return new BookRegistrationModel()
             {
                 Name = "Жизнь взаймы",
-                Author = "",
+                Author = null,
                 Year = 1861,
                 IsElectronicBook = false
             };

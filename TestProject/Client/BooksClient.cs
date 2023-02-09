@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 using TestProject.Support;
 
 namespace TestProject.Client
@@ -8,7 +9,12 @@ namespace TestProject.Client
     {
         public HttpContent RegisterBook(BookRegistrationModel model, HttpStatusCode expectedCode)
         {
-            string json = JsonSerializer.Serialize(model);
+            var jsonOptions = new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
+            string json = JsonSerializer.Serialize(model, jsonOptions);
             HttpClient client = new HttpClient();
             HttpRequestMessage message = new HttpRequestMessage()
             {

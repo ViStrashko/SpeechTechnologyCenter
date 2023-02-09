@@ -2,7 +2,7 @@
 
 namespace TestProject.Models.Response
 {
-    public class BookAllInfoModel
+    public class Book
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
@@ -18,5 +18,15 @@ namespace TestProject.Models.Response
 
         [JsonPropertyName("isElectronicBook")]
         public bool IsElectronicBook { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Book book &&
+                   Id == book.Id &&
+                   Name == book.Name &&
+                   Author == book.Author &&
+                   Year == book.Year &&
+                   IsElectronicBook == book.IsElectronicBook;
+        }
     }
 }

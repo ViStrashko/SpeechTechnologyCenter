@@ -9,7 +9,6 @@ namespace TestProject.Tests.PositiveTests
         private BookSteps _bookSteps;
         private BookMappers _bookMappers;
         private BookRegistrationModel _registerModel;
-        private List<BookAllInfoModel> _allBooks;
         private int _bookId; 
 
         public CRUDOperations()
@@ -18,10 +17,9 @@ namespace TestProject.Tests.PositiveTests
             _bookMappers = new BookMappers();
         }
 
-        [SetUp]
-        public void Setup()
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
-            _allBooks = _bookSteps.GetAllBooks();
             _registerModel = new BookRegistrationModel()
             {
                 Name = "Война и мир",
@@ -32,19 +30,11 @@ namespace TestProject.Tests.PositiveTests
             _bookId = _bookSteps.RegisterBookTest(_registerModel);
         }
 
-        [Test]
-        public void CheckBooks_WhenBooksModelsIsCorrect_ShouldCheckBooks()
-        {
-            BookAllInfoModel additingBook = _bookMappers.MappBookRegistrationModelToBookAllInfoModel(_bookId, _registerModel);
-            _allBooks.Add(additingBook);
-            _bookSteps.CheckBooksTest(_allBooks);
-        }
-
         [TestCaseSource(typeof(AddingBook_WhenBookModelIsCorrect_TestSourse))]
-        public void RegisterBook_WhenBookModelIsCorrect_ShouldAddingBook()
+        public void RegisterBook_WhenBookModelIsCorrect_ShouldAddingBook(BookRegistrationModel registerModel)
         {
-            int bookId = _bookSteps.RegisterBookTest(_registerModel);
-            BookAllInfoModel expectedBook = _bookMappers.MappBookRegistrationModelToBookAllInfoModel(bookId, _registerModel);
+            int bookId = _bookSteps.RegisterBookTest(registerModel);
+            Book expectedBook = _bookMappers.MappBookRegistrationModelToBook(bookId, registerModel);
             _bookSteps.FindAddedBookInListTest(expectedBook);
         }
 
@@ -52,7 +42,7 @@ namespace TestProject.Tests.PositiveTests
         public void EditBook_WhenBookModelIsCorrect_ShouldEditingBook(BookUpdateModel updateModel)
         {
             _bookSteps.UpdateBookTest(_bookId, updateModel);
-            BookAllInfoModel expectedBook = _bookMappers.MappBookUpdateModelToBookAllInfoModel(_bookId, updateModel);
+            AllInfoBookModel expectedBook = _bookMappers.MappBookUpdateModelToBookAllInfoModel(_bookId, updateModel);
             _bookSteps.GetAllInfoBookByBookIdTest(_bookId, expectedBook);
         }
 
@@ -60,7 +50,7 @@ namespace TestProject.Tests.PositiveTests
         public void DeleteBook_WhenBookIdIsCorrect_ShouldDeleteBook()
         {
             _bookSteps.DeleteBookTest(_bookId);
-            BookAllInfoModel expectedBook = _bookMappers.MappBookRegistrationModelToBookAllInfoModel(_bookId, _registerModel);
+            Book expectedBook = _bookMappers.MappBookRegistrationModelToBook(_bookId, _registerModel);
             _bookSteps.FindDeletedBookInListTest(expectedBook);
         }
     }

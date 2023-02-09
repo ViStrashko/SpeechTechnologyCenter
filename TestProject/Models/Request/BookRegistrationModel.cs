@@ -8,7 +8,7 @@ namespace TestProject.Models.Request
         public string Name { get; set; }
 
         [JsonPropertyName("author")]
-        public string Author { get; set; }
+        public string? Author { get; set; }
 
         [JsonPropertyName("year")]
         public int? Year { get; set; }
