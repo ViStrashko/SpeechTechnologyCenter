@@ -29,5 +29,13 @@ namespace TestProject.Support.Mappers
             responseModel.Book.Id = id;
             return responseModel;
         }
+
+        public BookUpdateModel MappBookRegistrationModelToMappBookRegistrationModel(BookRegistrationModel model)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<BookRegistrationModel, BookUpdateModel>());
+            Mapper mapper = new Mapper(config);
+            var responseModel = mapper.Map<BookUpdateModel>(model);
+            return responseModel;
+        }
     }
 }

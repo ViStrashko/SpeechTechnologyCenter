@@ -42,7 +42,7 @@ namespace TestProject.Client
             return response.Content;
         }
 
-        public HttpContent GetAllInfoBooks(HttpStatusCode expectedCode)
+        public HttpContent GetAllBooks(HttpStatusCode expectedCode)
         {
             HttpClient client = new HttpClient();
             HttpRequestMessage message = new HttpRequestMessage()

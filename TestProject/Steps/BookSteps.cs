@@ -21,31 +21,42 @@ namespace TestProject.Steps
             return actualBook.Book.Id;
         }
 
-        public AllInfoBookModel GetAllInfoBookByBookIdTest(int id, AllInfoBookModel expectedBook)
+        public AllBooksModel GetAllBooks()
+        {
+            HttpContent content = _booksClient.GetAllBooks(HttpStatusCode.OK);
+            AllBooksModel actualBooks = JsonSerializer.Deserialize<AllBooksModel>(content.ReadAsStringAsync().Result)!;
+            return actualBooks;
+        }
+
+        public AllBooksModel GetAllBooksTest(AllBooksModel expectedBooks)
+        {
+            HttpContent content = _booksClient.GetAllBooks(HttpStatusCode.OK);
+            AllBooksModel actualBooks = JsonSerializer.Deserialize<AllBooksModel>(content.ReadAsStringAsync().Result)!;
+            CollectionAssert.AreEqual(expectedBooks.Books, actualBooks.Books);
+            return actualBooks;
+        }
+
+        public Book GetAllInfoBookByBookIdTest(int id, Book expectedBook)
         {
             HttpContent content = _booksClient.GetAllInfoBookByBookId(id, HttpStatusCode.OK);
             AllInfoBookModel actualBook = JsonSerializer.Deserialize<AllInfoBookModel>(content.ReadAsStringAsync().Result)!;
-            Assert.AreEqual(expectedBook, actualBook);
-            return actualBook;
+            Assert.AreEqual(expectedBook, actualBook.Book);
+            return actualBook.Book;
         }
 
         public void FindAddedBookInListTest(Book expectedBook)
         {
-            HttpContent content = _booksClient.GetAllInfoBooks(HttpStatusCode.OK);
-            AllIBooksModel actualBooks = JsonSerializer.Deserialize<AllIBooksModel>(content.ReadAsStringAsync().Result)!;
+            HttpContent content = _booksClient.GetAllBooks(HttpStatusCode.OK);
+            AllBooksModel actualBooks = JsonSerializer.Deserialize<AllBooksModel>(content.ReadAsStringAsync().Result)!;
             if (expectedBook.Author == null)
                 expectedBook.Author = "";
-            else if (expectedBook.Id == null)
-                expectedBook.Id = 0;
-            else if (expectedBook.Year == null)
-                expectedBook.Year = 0;
             CollectionAssert.Contains(actualBooks.Books, expectedBook);
         }
 
         public void FindDeletedBookInListTest(Book expectedBook)
         {
-            HttpContent content = _booksClient.GetAllInfoBooks(HttpStatusCode.OK);
-            AllIBooksModel actualBooks = JsonSerializer.Deserialize<AllIBooksModel>(content.ReadAsStringAsync().Result)!;
+            HttpContent content = _booksClient.GetAllBooks(HttpStatusCode.OK);
+            AllBooksModel actualBooks = JsonSerializer.Deserialize<AllBooksModel>(content.ReadAsStringAsync().Result)!;
             CollectionAssert.DoesNotContain(actualBooks.Books, expectedBook);
         }
 

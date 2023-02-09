@@ -2,7 +2,7 @@
 
 namespace TestProject.Tests.TestSources
 {
-    public class EditBook_WhenBookModelIsCorrect_TestSourse : IEnumerable
+    public class EditBook_WhenBookModelAndBookIdIsCorrect_TestSourse : IEnumerable
     {
         public IEnumerator GetEnumerator()
         {

@@ -2,7 +2,7 @@
 
 namespace TestProject.Tests.TestSources
 {
-    public class AddingBook_WhenBookModelIsCorrect_TestSourse : IEnumerable
+    public class RegisterBook_WhenBookModelIsCorrectAndOptionalPropertiesIsNull_TestSourse : IEnumerable
     {
         public IEnumerator GetEnumerator()
         {
@@ -17,7 +17,7 @@ namespace TestProject.Tests.TestSources
             {
                 Name = "Ревизор",
                 Author = "Николай Гоголь",
-                Year = null,
+                Year = default,
                 IsElectronicBook = true
             };
             yield return new BookRegistrationModel()
@@ -25,7 +25,14 @@ namespace TestProject.Tests.TestSources
                 Name = "Евгений Онегин",
                 Author = "Александр Пушкин",
                 Year = 1833,
-                IsElectronicBook = null
+                IsElectronicBook = default
+            };
+            yield return new BookRegistrationModel()
+            {
+                Name = "Евгений Онегин",
+                Author = null,
+                Year = default,
+                IsElectronicBook = default
             };
         }
     }
